@@ -22,16 +22,16 @@ export default function manifest() {
     start_url: "/",
     screenshots: [
       {
-        src: "/DESKTOP.png", // برای دسکتاپ
+        src: "/DESKTOP.png", 
         sizes: "1916x941",
         type: "image/png",
         form_factor: "wide",
       },
       {
-        src: "/MOBILE.png", // برای موبایل
+        src: "/MOBILE.png", 
         sizes: "365x793",
         type: "image/png",
-        form_factor: "narrow", // یا مقدار دیگری به جز wide
+        form_factor: "narrow", 
       },
     ],
   };
