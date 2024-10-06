@@ -26,15 +26,19 @@ export default function PushNotificationManager() {
   }
 
   async function subscribeToPush() {
-    const registration = await navigator.serviceWorker.ready;
-    const sub = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(
-        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
-      ),
-    });
-    setSubscription(sub);
-    await subscribeUser(sub);
+    try {
+        const registration = await navigator.serviceWorker.ready;
+        const sub = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(
+            process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+          ),
+        });
+        setSubscription(sub);
+        await subscribeUser(JSON.stringify(sub));
+    } catch (error) {
+        console.log(error)
+    }
   }
 
   async function unsubscribeFromPush() {
