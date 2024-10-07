@@ -5,16 +5,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #a6a99e;
+  --secondary: #1c1c29;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #a6a99e;
+    --secondary: #1c1c29;
   }
 }
-
-
 
 @layer utilities {
   .text-balance {
