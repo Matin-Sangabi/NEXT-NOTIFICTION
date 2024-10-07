@@ -38,9 +38,8 @@ export default function AuthProvider({ children }) {
       if (pathname.includes("/auth")) {
         console.log(error)
       } else {
-        setTimeout(() => {
-               window.location.href = "/auth/login";
-        } , 1000)
+        window.location.href = "/auth/login";
+        
       }
     }
   }
