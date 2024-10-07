@@ -14,7 +14,8 @@ import FormProvider from "./providers/FormProvider";
 import { sendNotification } from "../service/webpush.service";
 
 export default function UsersLists() {
-  const { data } = useSuspenseQuery(usersOptions);
+  const { data  ,error } = useSuspenseQuery(usersOptions);
+  console.log(error)
   const [openModal, setOpenModal] = React.useState(null);
 
   const defaultValues = React.useMemo(

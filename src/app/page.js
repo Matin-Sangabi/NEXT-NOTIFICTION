@@ -1,4 +1,3 @@
-import Image from "next/image";
 import PushNotificationManager from "./notidications/manager";
 import InstallPrompt from "./notidications/install";
 import { getQueryClient } from "./get-queryclient";

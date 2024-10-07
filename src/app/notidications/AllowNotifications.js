@@ -48,7 +48,7 @@ export default function AllowNotifications() {
       <div className="w-full flex flex-col gap-y-3">
         <h1 className="text-xl font-semibold">Enable Notifications</h1>
         <p>
-          We'd like to keep you updated with important news, alerts, and special
+          {`we'd`} like to keep you updated with important news, alerts, and special
           offers. To do this, we need your permission to send notifications. You
           can manage or turn them off anytime in your browser settings.
         </p>

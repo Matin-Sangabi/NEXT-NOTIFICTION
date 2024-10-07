@@ -21,6 +21,7 @@ export default function Header() {
             src="/images/logo/7533464-removebg-preview.png"
             width={45}
             height={40}
+            alt="logo"
           />
         </Link>
         <div className="flex items-center gap-x-1">
