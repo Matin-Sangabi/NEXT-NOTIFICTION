@@ -1,13 +1,16 @@
-import React from 'react'
-import ReactQuery from './ReactQuery'
-import NextUi from './NextUi'
+import React from "react";
+import ReactQuery from "./ReactQuery";
+import NextUi from "./NextUi";
+import { Toaster } from "react-hot-toast";
+import AuthProvider from "./AuthContext";
 
-export default function Providers({children}) {
+export default function Providers({ children }) {
   return (
     <ReactQuery>
-        <NextUi>
-            {children}
-        </NextUi>
+      <AuthProvider>
+        <NextUi>{children}</NextUi>
+        <Toaster />
+      </AuthProvider>
     </ReactQuery>
-  )
+  );
 }

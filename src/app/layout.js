@@ -1,18 +1,10 @@
-import localFont from "next/font/local";
+import { Karla } from "next/font/google";
+
 import "./globals.css";
 import Providers from "./providers";
 import MainLayout from "../components/container/MainLayout";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const karlaFont = Karla({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -38,9 +30,7 @@ export default function RootLayout({ children }) {
         />
         <meta name="apple-mobile-web-app-title" content="Friends" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${karlaFont.className} antialiased`}>
         <Providers>
           <MainLayout>{children}</MainLayout>
         </Providers>

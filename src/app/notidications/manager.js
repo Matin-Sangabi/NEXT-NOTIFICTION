@@ -1,13 +1,16 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import urlBase64ToUint8Array from "./urlBase64";
 import { sendNotification, subscribeUser, unsubscribeUser } from "../actions";
+import useUser from "../../hooks/useUser";
 
 export default function PushNotificationManager() {
   const [isSupported, setIsSupported] = useState(false);
   const [subscription, setSubscription] = useState(null);
   const [message, setMessage] = useState("");
+
+  const user = useUser();
 
   useEffect(() => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
@@ -22,22 +25,23 @@ export default function PushNotificationManager() {
       updateViaCache: "none",
     });
     const sub = await registration.pushManager.getSubscription();
+    console.log(sub);
     setSubscription(sub);
   }
 
   async function subscribeToPush() {
     try {
-        const registration = await navigator.serviceWorker.ready;
-        const sub = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(
-            process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
-          ),
-        });
-        setSubscription(sub);
-        await subscribeUser(JSON.stringify(sub));
+      const registration = await navigator.serviceWorker.ready;
+      const sub = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+        ),
+      });
+      setSubscription(sub);
+      await subscribeUser(JSON.stringify(sub));
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   }
 
@@ -59,26 +63,11 @@ export default function PushNotificationManager() {
   }
 
   return (
-    <div>
-      <h3>Push Notifications</h3>
-      {subscription ? (
-        <>
-          <p>You are subscribed to push notifications.</p>
-          <button onClick={unsubscribeFromPush}>Unsubscribe</button>
-          <input
-            type="text"
-            placeholder="Enter notification message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <button onClick={sendTestNotification}>Send Test</button>
-        </>
-      ) : (
-        <>
-          <p>You are not subscribed to push notifications.</p>
-          <button onClick={subscribeToPush}>Subscribe</button>
-        </>
-      )}
+    <div className="w-full mb-4">
+      <h3>
+        Push Notifications :{" "}
+        <strong>{user?.is_subscribe ? "Enabled" : "Disabled"}</strong>
+      </h3>
     </div>
   );
 }

@@ -8,6 +8,10 @@ import { Button } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "@tanstack/react-query";
+import { register } from "../../../service/auth.service";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const [showPass, setShowPass] = React.useState(false);
@@ -31,7 +35,21 @@ export default function RegisterForm() {
 
   const { handleSubmit } = methods;
 
-  const onSubmit = (data) => console.log(data);
+  const { mutateAsync, isPending } = useMutation({ mutationFn: register });
+
+  const router = useRouter();
+
+  const onSubmit = async (data) => {
+    try {
+      await mutateAsync(data);
+      toast.success("Register Success , Please Login !");
+      router.push("/auth/login");
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something went wrong !"
+      );
+    }
+  };
 
   return (
     <div className="w-full mt-4">
@@ -64,13 +82,14 @@ export default function RegisterForm() {
           />
           <div className="w-full mt-8">
             <Button
+              isLoading={isPending}
               size="lg"
               fullWidth
               radius="md"
               color="secondary"
               type="submit"
             >
-              Login
+              Register
             </Button>
           </div>
         </div>

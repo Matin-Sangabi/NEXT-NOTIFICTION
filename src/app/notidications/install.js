@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import AllowNotifications from "./AllowNotifications";
 
 export default function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
@@ -13,15 +14,15 @@ export default function InstallPrompt() {
   }, []);
 
   if (isStandalone) {
-    return null; // Don't show install button if already installed
+    return <AllowNotifications />; // Don't show install button if already installed
   }
 
   return (
-    <div>
-      <h3>Install App</h3>
+    <div className="w-full  py-2 bg-primary flex items-center justify-end flex-col border rounded-2xl ">
+      <h3 className="text-center font-semibold">Install App</h3>
       <button>Add to Home Screen</button>
       {isIOS && (
-        <p>
+        <p className="font-normal mt-2 px-3">
           To install this app on your iOS device, tap the share button
           <span role="img" aria-label="share icon">
             {" "}
@@ -32,7 +33,7 @@ export default function InstallPrompt() {
             {" "}
             ➕{" "}
           </span>
-          .
+          
         </p>
       )}
     </div>

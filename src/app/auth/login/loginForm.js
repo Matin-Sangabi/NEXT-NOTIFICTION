@@ -10,9 +10,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../../service/auth.service";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import useUser from "../../../hooks/useUser";
 
 export default function LoginForm() {
   const [showPass, setShowPass] = React.useState(false);
+
 
   const defaultValues = React.useMemo(
     () => ({
@@ -33,12 +37,17 @@ export default function LoginForm() {
 
   const { mutateAsync, isPending } = useMutation({ mutationFn: login });
 
+  const router = useRouter();
+
   const onSubmit = async (data) => {
     try {
       const res = await mutateAsync(data);
-      console.log(res);
+      toast.success(res?.message);
+      router.push("/auth");
     } catch (error) {
-      console.log(error);
+      toast.error(
+        error?.response?.data?.error?.message || "Something went wrong !"
+      );
     }
   };
 
