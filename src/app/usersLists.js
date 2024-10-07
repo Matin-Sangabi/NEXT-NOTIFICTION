@@ -12,10 +12,16 @@ import { useForm } from "react-hook-form";
 import AppInput from "../components/Forms/AppInput";
 import FormProvider from "./providers/FormProvider";
 import { sendNotification } from "../service/webpush.service";
+import useUser from "../hooks/useUser";
 
 export default function UsersLists() {
-  const { data  ,error } = useSuspenseQuery(usersOptions);
-  console.log(error)
+
+  const { data, error } = useSuspenseQuery(usersOptions);
+  console.log(error);
+
+
+
+
   const [openModal, setOpenModal] = React.useState(null);
 
   const defaultValues = React.useMemo(
@@ -56,30 +62,32 @@ export default function UsersLists() {
   return (
     <>
       <div className="grid grid-cols-2 gap-x-3 gap-y-5">
-        {data?.map((item) => (
-          <div
-            key={item?._id}
-            className="rounded-xl bg-[#a6a99e]/20 shadow-sm p-3 flex flex-col gap-p-y-4"
-          >
-            <span className="font-semibold">{item?.name}</span>
-            <span className="text-black/60 text-sm truncate block">
-              {item?.email}
-            </span>
-            <div className="pt-4 w-full">
-              <Tooltip content="send notification" color="secondary">
-                <Button
-                  size="sm"
-                  isIconOnly
-                  variant="faded"
-                  color="secondary"
-                  onClick={() => setOpenModal(item)}
-                >
-                  <Icon icon="lets-icons:send-duotone" width="23" />
-                </Button>
-              </Tooltip>
+        {data &&
+          data?.length > 0 &&
+          data?.map((item) => (
+            <div
+              key={item?._id}
+              className="rounded-xl bg-[#a6a99e]/20 shadow-sm p-3 flex flex-col gap-p-y-4"
+            >
+              <span className="font-semibold">{item?.name}</span>
+              <span className="text-black/60 text-sm truncate block">
+                {item?.email}
+              </span>
+              <div className="pt-4 w-full">
+                <Tooltip content="send notification" color="secondary">
+                  <Button
+                    size="sm"
+                    isIconOnly
+                    variant="faded"
+                    color="secondary"
+                    onClick={() => setOpenModal(item)}
+                  >
+                    <Icon icon="lets-icons:send-duotone" width="23" />
+                  </Button>
+                </Tooltip>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
       <AppModal isOpen={Boolean(openModal)} onClose={() => setOpenModal(false)}>
         <div className="flex  flex-col gap-y-4 ">
