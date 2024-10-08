@@ -43,7 +43,7 @@ export default function LoginForm() {
     try {
       const res = await mutateAsync(data);
       toast.success(res?.message);
-      // router.push("/auth");
+      router.push("/auth");
     } catch (error) {
       toast.error(
         error?.response?.data?.error?.message || "Something went wrong !"
