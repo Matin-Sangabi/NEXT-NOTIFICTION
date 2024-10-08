@@ -6,11 +6,15 @@ import React from "react";
 import useUser from "../../hooks/useUser";
 import { Icon } from "@iconify/react";
 import { useStore } from "../../zustand/store";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const user = useUser();
 
   const { setOPenModal } = useStore((state) => state);
+
+  const { push } = useRouter();
 
   return (
     <header>
@@ -35,7 +39,14 @@ export default function Header() {
               <Icon icon="solar:bell-bold-duotone" width="24" />
             </Button>
           )}
-          <Avatar size="sm" />
+          <Avatar
+            size="sm"
+            onClick={() => {
+              console.log("click");
+              Cookies.remove("access_token");
+              push("/auth/login");
+            }}
+          />
         </div>
       </nav>
     </header>

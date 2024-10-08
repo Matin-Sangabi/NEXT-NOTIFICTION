@@ -13,10 +13,10 @@ import { login } from "../../../service/auth.service";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import useUser from "../../../hooks/useUser";
+import Cookies from "js-cookie";
 
 export default function LoginForm() {
   const [showPass, setShowPass] = React.useState(false);
-
 
   const defaultValues = React.useMemo(
     () => ({
@@ -43,8 +43,11 @@ export default function LoginForm() {
     try {
       const res = await mutateAsync(data);
       toast.success(res?.message);
-      // router.push("/auth");
+      console.log(res.access);
+      Cookies.set("access_token", res.access, { expires: 1 });
+      router.push("/auth");
     } catch (error) {
+      console.log(error);
       toast.error(
         error?.response?.data?.error?.message || "Something went wrong !"
       );
